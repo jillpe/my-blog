@@ -1,5 +1,6 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import NavBar from '../../components/NavBar/NavBar';
 import HomePage from '../HomePage/HomePage';
 import AllBlogsPage from '../AllBlogsPage/AllBlogsPage';
 import FitnessPage from '../FitnessPage/FitnessPage';
@@ -9,6 +10,7 @@ export default function App() {
   return (
     <main className="App">
       <>
+        <NavBar />
         <Routes>
           <Route exact path="/" element={<HomePage/>}/>
           <Route exact path="/allblogs" element={<AllBlogsPage/>}/>
