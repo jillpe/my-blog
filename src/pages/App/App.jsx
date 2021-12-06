@@ -1,21 +1,38 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
+import * as postAPI from '../../utilities/posts-api';
 import HomePage from '../HomePage/HomePage';
-import AllBlogsPage from '../AllBlogsPage/AllBlogsPage';
-import FitnessPage from '../FitnessPage/FitnessPage';
-import FoodPage from '../FoodPage/FoodPage';
+import AllPostsPage from '../AllPostsPage/AllPostsPage';
+import CreatePostPage from '../CreatePostPage/CreatePostPage';
 
 export default function App() {
+  const [posts, setPosts] = useState([]);
+
+
+  useEffect(() => {
+    async function getPosts(){
+      const posts = await postAPI.getAll();
+      setPosts(posts);
+    }
+    getPosts();
+  }, [])
+
+  async function handleAddPost (newPostData) {
+    console.log('Post added');
+    const newPost = await postAPI.create(newPostData);
+    setPosts([...posts.abbrev, newPost])
+  }
+
   return (
     <main className="App">
       <>
         <NavBar />
         <Routes>
           <Route exact path="/" element={<HomePage/>}/>
-          <Route exact path="/allblogs" element={<AllBlogsPage/>}/>
-          <Route exact path="/fitness" element={<FitnessPage/>}/>
-          <Route exact path="/food" element={<FoodPage/>}/>
+          <Route exact path="/allposts" element={<AllPostsPage posts={posts}/>}/>
+          <Route exact path="/create" element={<CreatePostPage handleAddPost={handleAddPost}/>}/>
         </Routes>
       </>
     </main>
