@@ -1,6 +1,8 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { getUser } from '../../utilities/users-service';
+
 import NavBar from '../../components/NavBar/NavBar';
 import * as postAPI from '../../utilities/posts-api';
 import HomePage from '../HomePage/HomePage';
